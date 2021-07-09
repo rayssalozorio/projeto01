@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<!-- saved from url=(0062)https://blog.rocketseat.com.br/mapas-com-react-usando-leaflet/ -->
+<html lang="pt"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<title>Mapas com React usando Leaflet</title>
+		<meta name="HandheldFriendly" content="True">
+		<meta name="MobileOptimized" content="320">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link href="./Mapas com React usando Leaflet_files/css2" rel="stylesheet">		<link rel="stylesheet" type="text/css" href="./Mapas com React usando Leaflet_files/screen.css">
+		<link rel="stylesheet" type="text/css" href="./Mapas com React usando Leaflet_files/prism.css">
+		<meta name="description" content="☕ Vamos construir uma página web para demonstrar na prática a integração de Mapas 🗺️  com React e Leaflet. Usaremos react-select para implementar o autocomplete com geolocalização! ⚛️">
+    <link rel="shortcut icon" href="https://blog.rocketseat.com.br/favicon.png" type="image/png">
+    <link rel="canonical" href="https://blog.rocketseat.com.br/mapas-com-react-usando-leaflet/">
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    <link rel="amphtml" href="https://blog.rocketseat.com.br/mapas-com-react-usando-leaflet/amp/">
+    
+    <meta property="og:site_name" content="Blog da Rocketseat">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Mapas com React usando Leaflet">
+    <meta property="og:description" content="☕ Vamos construir uma página web para demonstrar na prática a integração de Mapas 🗺️  com React e Leaflet. Usaremos react-select para implementar o autocomplete com geolocalização! ⚛️">
+    <meta property="og:url" content="https://blog.rocketseat.com.br/mapas-com-react-usando-leaflet/">
+    <meta property="og:image" content="https://blog.rocketseat.com.br/content/images/2020/11/blog-thumb-utilizando-mapas-no-react-com-leaflet-1.jpg">
+    <meta property="article:published_time" content="2020-11-11T18:56:05.000Z">
+    <meta property="article:modified_time" content="2020-12-14T14:03:37.000Z">
+    <meta property="article:tag" content="ReactJS">
+    <meta property="article:tag" content="Front End">
+    
+    <meta property="article:publisher" content="https://www.facebook.com/rocketseat">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Mapas com React usando Leaflet">
+    <meta name="twitter:description" content="☕ Vamos construir uma página web para demonstrar na prática a integração de Mapas 🗺️  com React e Leaflet. Usaremos react-select para implementar o autocomplete com geolocalização! ⚛️">
+    <meta name="twitter:url" content="https://blog.rocketseat.com.br/mapas-com-react-usando-leaflet/">
+    <meta name="twitter:image" content="https://blog.rocketseat.com.br/content/images/2020/11/blog-thumb-utilizando-mapas-no-react-com-leaflet-1.jpg">
+    <meta name="twitter:label1" content="Written by">
+    <meta name="twitter:data1" content="Thiago Marinho">
+    <meta name="twitter:label2" content="Filed under">
+    <meta name="twitter:data2" content="ReactJS, Front End">
+    <meta name="twitter:site" content="@rocketseat">
+    <meta name="twitter:creator" content="@tgmarinho">
+    <meta property="og:image:width" content="1920">
+    <meta property="og:image:height" content="1080">
+    
+    <script type="text/javascript" async="" src="./Mapas com React usando Leaflet_files/f.txt"></script><script type="text/javascript" async="" src="./Mapas com React usando Leaflet_files/js"></script><script src="./Mapas com React usando Leaflet_files/458929838438421" async=""></script><script src="./Mapas com React usando Leaflet_files/512526249721864" async=""></script><script src="./Mapas com React usando Leaflet_files/227628427740337" async=""></script><script async="" src="./Mapas com React usando Leaflet_files/fbevents.js"></script><script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "publisher": {
+        "@type": "Organization",
+        "name": "Blog da Rocketseat",
+        "url": "https://blog.rocketseat.com.br/",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "https://blog.rocketseat.com.br/content/images/2020/08/logo-black-blog-rocketseat.png"
+        }
+    },
+    "author": {
+        "@type": "Person",
+        "name": "Thiago Marinho",
+        "image": {
+            "@type": "ImageObject",
+            "url": "https://blog.rocketseat.com.br/content/images/2021/03/profile-pic--4-.png",
+            "width": 500,
+            "height": 500
+        },
+        "url": "https://blog.rocketseat.com.br/author/thiago-marinho/",
+        "sameAs": [
+            "https://tgmarinho.com",
+            "https://twitter.com/tgmarinho"
+        ]
+    },
+    "headline": "Mapas com React usando Leaflet",
+    "url": "https://blog.rocketseat.com.br/mapas-com-react-usando-leaflet/",
+    "datePublished": "2020-11-11T18:56:05.000Z",
+    "dateModified": "2020-12-14T14:03:37.000Z",
+    "image": {
+        "@type": "ImageObject",
+        "url": "https://blog.rocketseat.com.br/content/images/2020/11/blog-thumb-utilizando-mapas-no-react-com-leaflet-1.jpg",
+        "width": 1920,
+        "height": 1080
+    },
+    "keywords": "ReactJS, Front End",
+    "description": "👋 Introdução\nNeste post vamos desenvolver uma página web para demonstrar, na prática, a\nintegração de Mapas em uma aplicação com React usando Leaflet\n[https://react-leaflet.js.org/].\n\nAlguns pontos que vamos abordar:\n\n * Geolocalização;\n * Consumo de API;\n * Input com Autocomplete usando React-Select;\n * Integração com Mapas;\n * Estilização do Mapa e Marcadores.\n\nLeaflet [https://leafletjs.com/] é uma biblioteca JavaScript open-source para\ntrabalhar com Mapas em aplicações web e mobile. Pode se",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://blog.rocketseat.com.br/"
+    }
+}
+    </script>
+
+    <meta name="generator" content="Ghost 3.20">
+    <link rel="alternate" type="application/rss+xml" title="Blog da Rocketseat" href="https://blog.rocketseat.com.br/rss/">
+    <!-- Facebook Pixel Code -->
+<script>
+  !function(f,b,e,v,n,t,s)
+  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+  n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];
+  s.parentNode.insertBefore(t,s)}(window, document,'script',
+  'https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', '227628427740337');
+  fbq('init', '512526249721864');
+  fbq('init', '458929838438421');
+  fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+  src="https://www.facebook.com/tr?id=227628427740337&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Facebook Pixel Code -->
+<link rel="stylesheet" type="text/css" src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.19.0/themes/prism.min.css">
+	<script src="./Mapas com React usando Leaflet_files/f(1).txt"></script><style id="lightense-images-css">
+:root {
+  --lightense-z-index: 999999;
+  --lightense-backdrop: rgba(255, 255, 255, .98);
+  --lightense-backdrop-safari: rgba(255, 255, 255, 0.6859999999999999);
+  --lightense-duration: 300ms;
+  --lightense-timing-func: cubic-bezier(.2, 0, .1, 1);
+}
+
+.lightense-backdrop {
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  z-index: calc(var(--lightense-z-index) - 1);
+  padding: 0;
+  margin: 0;
+  transition: opacity var(--lightense-duration) ease;
+  cursor: zoom-out;
+  opacity: 0;
+  background-color: var(--lightense-backdrop);
+  visibility: hidden;
+}
+
+@supports (-webkit-backdrop-filter: blur(30px)) {
+  .lightense-backdrop {
+    background-color: var(--lightense-backdrop-safari);
+    -webkit-backdrop-filter: blur(30px);
+  }
+}
+
+@supports (backdrop-filter: blur(30px)) {
+  .lightense-backdrop {
+    background-color: var(--lightense-backdrop-safari);
+    backdrop-filter: blur(30px);
+  }
+}
+
+.lightense-wrap {
+  position: relative;
+  transition: transform var(--lightense-duration) var(--lightense-timing-func);
+  z-index: var(--lightense-z-index);
+  pointer-events: none;
+}
+
+.lightense-target {
+  cursor: zoom-in;
+  transition: transform var(--lightense-duration) var(--lightense-timing-func);
+  pointer-events: auto;
+}
+
+.lightense-open {
+  cursor: zoom-out;
+}
+
+.lightense-transitioning {
+  pointer-events: none;
+}</style><script src="./Mapas com React usando Leaflet_files/embed.js" async="" data-timestamp="1624546109039"></script><link rel="prefetch" as="style" href="https://c.disquscdn.com/next/embed/styles/lounge.567531e1abfac5c88f2ef94b952d12ba.css"><link rel="prefetch" as="script" href="https://c.disquscdn.com/next/embed/common.bundle.e51fe378e0cd63a2764bfb6c7ca542a8.js"><link rel="prefetch" as="script" href="https://c.disquscdn.com/next/embed/lounge.bundle.b0072cfb1bd29fdd974b1b27439949d8.js"><link rel="prefetch" as="script" href="https://disqus.com/next/config.js"><script src="./Mapas com React usando Leaflet_files/alfie_v4.63f1ab6d6b9d5807dc0c94ef3fe0b851.js" async="" charset="UTF-8"></script></head>
+	<body class="post-template tag-reactjs tag-front-end">
+		<div class="global-wrap">
+			<div class="section-content-wrap">
+				<div class="section-header wrap">
+	<header class="header-wrap flex">
+		<div class="header-logo">
+			<div class="is-logo"><a href="https://blog.rocketseat.com.br/"><img src="./Mapas com React usando Leaflet_files/logo-black-blog-rocketseat.png" alt="Blog da Rocketseat"></a></div>
+
+</div>
+<div class="header-nav">
+	<nav class="nav-wrap">
+		<label for="toggle" class="nav-label hamburger hamburger-minus">
+			<span class="hamburger-box">
+				<span class="hamburger-inner"></span>
+			</span>
+		</label>
+		<input type="checkbox" id="toggle" class="nav-toggle">
+		<ul class="nav-list">
+			
+<li class="nav-list-item">
+	<a href="https://blog.rocketseat.com.br/" class="nav-link">HOME</a>
+	<span class="nav-dot"></span>
+</li>
+<li class="nav-list-item">
+	<a href="https://blog.rocketseat.com.br/tag/nodejs/" class="nav-link">BACK END</a>
+	<span class="nav-dot"></span>
+</li>
+<li class="nav-list-item">
+	<a href="https://blog.rocketseat.com.br/tag/reactjs/" class="nav-link">FRONT END</a>
+	<span class="nav-dot"></span>
+</li>
+<li class="nav-list-item">
+	<a href="https://blog.rocketseat.com.br/tag/react-native/" class="nav-link">MOBILE</a>
+	<span class="nav-dot"></span>
+</li>
+
+						<li class="nav-list-item search-open"><span>Search</span><svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18.420346,15.5800244 L24,21.1596784 L21.1596784,24 L15.5800244,18.420346 C13.9925104,19.4717887 12.088789,20.0841064 10.0420532,20.0841064 C4.49598037,20.0841064 0,15.5881261 0,10.0420532 C0,4.49598037 4.49598037,0 10.0420532,0 C15.5881261,0 20.0841064,4.49598037 20.0841064,10.0420532 C20.0841064,12.088789 19.4717887,13.9925104 18.420346,15.5800244 Z M10.0420532,16.0672851 C13.3696969,16.0672851 16.0672851,13.3696969 16.0672851,10.0420532 C16.0672851,6.71440951 13.3696969,4.01682129 10.0420532,4.01682129 C6.71440951,4.01682129 4.01682129,6.71440951 4.01682129,10.0420532 C4.01682129,13.3696969 6.71440951,16.0672851 10.0420532,16.0672851 Z"></path></svg></li>		</ul>
+	</nav>
+</div>
+</header>
+</div>				<article>
+	<div class="section-featured is-featured-image">
+	<div class="featured-image" style="background-image: url(https://blog.rocketseat.com.br/content/images/2020/11/blog-thumb-utilizando-mapas-no-react-com-leaflet-1.jpg)"></div>
+	<div class="featured-wrap flex">
+			<div class="featured-content">
+				<div class="tags-wrap">
+					<span class="featured-label global-tag"><svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22.9712403,8.05987765 L16.2291373,8.05987765 L12.796794,0.459688839 C12.5516266,-0.153229613 11.4483734,-0.153229613 11.0806223,0.459688839 L7.64827899,8.05987765 L0.906176009,8.05987765 C0.538424938,8.05987765 0.170673866,8.30504503 0.0480901758,8.6727961 C-0.0744935148,9.04054717 0.0480901758,9.40829825 0.293257557,9.65346563 L5.31918887,14.3116459 L3.11268244,22.4021694 C2.99009875,22.7699205 3.11268244,23.1376716 3.48043351,23.382839 C3.72560089,23.6280063 4.21593565,23.6280063 4.46110303,23.5054227 L11.9387082,19.2149935 L19.4163133,23.5054227 C19.538897,23.6280063 19.6614807,23.6280063 19.906648,23.6280063 C20.1518154,23.6280063 20.2743991,23.5054227 20.5195665,23.382839 C20.7647339,23.1376716 20.8873176,22.7699205 20.8873176,22.4021694 L18.6808111,14.3116459 L23.7067424,9.65346563 C23.9519098,9.40829825 24.0744935,9.04054717 23.9519098,8.6727961 C23.7067424,8.30504503 23.3389914,8.05987765 22.9712403,8.05987765 Z"></path></svg> <span>Destaque</span></span>
+					<a class="post-tag global-tag" href="https://blog.rocketseat.com.br/tag/reactjs/">ReactJS</a>
+					<a class="post-tag global-tag" href="https://blog.rocketseat.com.br/tag/front-end/">Front End</a>
+				</div>
+				<h1 class="white">Mapas com React usando Leaflet</h1>
+				<div class="item-meta white">
+					<span>por</span>
+					<a href="https://blog.rocketseat.com.br/author/thiago-marinho/">Thiago Marinho</a>
+					<time datetime="2020-11-11">há 7 meses</time>
+					<span class="reading-time"><svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"> <path d="M10.1907692,24 C4.5625628,24 0,19.4374372 0,13.8092308 C0,8.18102433 4.5625628,3.61846154 10.1907692,3.61846154 C15.8189757,3.61846154 20.3815385,8.18102433 20.3815385,13.8092308 C20.3815385,19.4374372 15.8189757,24 10.1907692,24 Z M10.1907692,22 C14.7144062,22 18.3815385,18.3328677 18.3815385,13.8092308 C18.3815385,9.28559383 14.7144062,5.61846154 10.1907692,5.61846154 C5.6671323,5.61846154 2,9.28559383 2,13.8092308 C2,18.3328677 5.6671323,22 10.1907692,22 Z" id="Oval"></path><path d="M7.53230769,2.32923077 C6.98002294,2.32923077 6.53230769,1.88151552 6.53230769,1.32923077 C6.53230769,0.776946019 6.98002294,0.329230769 7.53230769,0.329230769 L12.9225711,0.329230769 C13.4748559,0.329230769 13.9225711,0.776946019 13.9225711,1.32923077 C13.9225711,1.88151552 13.4748559,2.32923077 12.9225711,2.32923077 L7.53230769,2.32923077 Z" id="Line-2"></path><path d="M13.2928932,9.29289322 C13.6834175,8.90236893 14.3165825,8.90236893 14.7071068,9.29289322 C15.0976311,9.68341751 15.0976311,10.3165825 14.7071068,10.7071068 L10.897876,14.5163376 C10.5073517,14.9068618 9.87418674,14.9068618 9.48366245,14.5163376 C9.09313816,14.1258133 9.09313816,13.4926483 9.48366245,13.102124 L13.2928932,9.29289322 Z" id="Line"></path></svg> 11 min de leitura</span>
+				</div>
+		</div>
+	</div>
+</div>	<div class="section-post wrap">
+		<div class="post-wrap ">
+			<h3 id="-introdu-o">👋 Introdução</h3><p>Neste post vamos desenvolver uma página web para demonstrar, na prática, a integração de Mapas em uma aplicação com React usando <a href="https://react-leaflet.js.org/">Leaflet</a>.</p><p>Alguns pontos que vamos abordar:</p><ul><li>Geolocalização;</li><li>Consumo de API;</li><li>Input com Autocomplete usando React-Select;</li><li>Integração com Mapas;</li><li>Estilização do Mapa e Marcadores.</li></ul><p><a href="https://leafletjs.com/">Leaflet</a> é uma biblioteca JavaScript open-source para trabalhar com Mapas em aplicações web e mobile. Pode ser simplesmente integrada a um site usando apenas HTML, CSS e JavaScript.</p><p>Podemos também integrar a Leaflet ao React com a biblioteca <a href="https://react-leaflet.js.org/">React Leaflet</a>, que tem suporte ao TypeScript sendo bastante simples de utilizar. Ambas serão utilizadas em nossa aplicação de demonstração.</p><p>Somando todas essas tecnologias e conceitos, no final deste post vamos ter desenvolvido o app Entregas. Vai ser assim:</p><figure class="kg-card kg-embed-card kg-card-hascaption"><div style="position:relative;padding-bottom: calc(65.4% + 44px)"><iframe src="./Mapas com React usando Leaflet_files/devotedwhiteflamingo.html" frameborder="0" scrolling="no" width="100%" height="100%" style="position:absolute;top:0;left:0;" allowfullscreen=""></iframe></div><figcaption>Fluxo da aplicação Entregas - Clique em HD para melhorar a qualidade do Gif.</figcaption></figure><p>Conforme podemos observar na animação acima, quando o usuário digita o endereço, sugestões de locais semelhantes começam a aparecer no autocomplete. Quando algum endereço é selecionado, o pin aparece centralizado no mapa, mostrando a localidade escolhida.</p><p>Quando o usuário envia o formulário, o pin 📍 é atualizado para um ícone de pacote 📦. Para acessar os dados da entrega basta clicar no ícone — esse é o fluxo completo :)</p><h3 id="-pr-requisitos">📝 Pré-requisitos</h3><p><em>Sempre queremos entregar a <strong>melhor experiência</strong> para nossa audiência.</em></p><p>Para uma melhor experiência com a leitura, você precisa entender o básico de:</p><ul><li><a href="https://www.youtube.com/watch?v=vYlz3SmNXQQ&amp;ab_channel=Rocketseat">Como fazer requisições à API</a>;</li><li><a href="https://pt-br.reactjs.org/">React</a> &amp; <a href="https://blog.rocketseat.com.br/typescript-vantagens-mitos-conceitos/">TypeScript</a></li><li><a href="https://www.youtube.com/watch?v=R3S8DEzEn6s&amp;ab_channel=Rocketseat">CSS</a></li><li><a href="https://nodejs.org/en/">NodeJS</a>, <a href="https://yarnpkg.com/">Yarn</a> ou <a href="https://www.npmjs.com/">Npm</a> configurados e <a href="https://create-react-app.dev/">Create React App</a> (CRA)</li></ul><h3 id="-iniciando-o-projeto-cra">🔰 Iniciando o Projeto - CRA</h3><p>Para criar um projeto React com TypeScript, execute o comando com Yarn:</p><pre class=" language-jsx"><code class=" language-jsx">yarn create react<span class="token operator">-</span>app blog<span class="token operator">-</span>react<span class="token operator">-</span>maps<span class="token operator">-</span>leaflet <span class="token operator">--</span>template typescript
+</code></pre><p>Ou com Npx (npm)</p><pre class=" language-jsx"><code class=" language-jsx">npx create<span class="token operator">-</span>react<span class="token operator">-</span>app blog<span class="token operator">-</span>react<span class="token operator">-</span>maps<span class="token operator">-</span>leaflet <span class="token operator">--</span>template typescript
+</code></pre><p>Agora é só acessar o projeto para começar a codar:</p><pre class=" language-jsx"><code class=" language-jsx">cd blog<span class="token operator">-</span>react<span class="token operator">-</span>maps<span class="token operator">-</span>Leaflet <span class="token operator">&amp;&amp;</span> code <span class="token punctuation">.</span>
+</code></pre><h3 id="-instalando-e-configurando-as-bibliotecas">🌍 &nbsp;Instalando e configurando as bibliotecas</h3><p>Para trabalhar com mapas instalamos as libs:</p><pre class=" language-jsx"><code class=" language-jsx">yarn add leaflet react<span class="token operator">-</span>leaflet
+</code></pre><p>A lib <code>react-select</code> vai auxiliar com autocomplete no input de endereço, e o <code>uuid</code> vai gerar um ID:</p><pre class=" language-jsx"><code class=" language-jsx">yarn add react<span class="token operator">-</span>select uuid
+</code></pre><p>Instalando as tipagens das libs:</p><pre class=" language-jsx"><code class=" language-jsx">yarn add <span class="token operator">-</span><span class="token constant">D</span> @types<span class="token operator">/</span>react<span class="token operator">-</span>leaflet @types<span class="token operator">/</span>react<span class="token operator">-</span>leaflet @types<span class="token operator">/</span>react<span class="token operator">-</span>select
+</code></pre><h3 id="-configurando-a-vari-vel-de-ambiente">📂 Configurando a variável de ambiente</h3><p>Sempre que formos trabalhar com APIs de mapas vamos precisar de um Token de acesso com o provedor. Mais uma vez estaremos usando o <a href="https://account.mapbox.com/">Mapbox</a>.</p><p>É bem simples de criar a conta e pegar o <code>access_token</code>.</p><p>Crie um arquivo <code>.env</code> e adicione uma variável:</p><pre class=" language-jsx"><code class=" language-jsx"><span class="token constant">REACT_APP_ACCESS_TOKEN_MAP_BOX</span><span class="token operator">=</span><span class="token constant">SEU_ACCESS_TOKEN_MAP_BOX_AQUI</span>
+</code></pre><p>No arquivo <code>.gitignore</code> adicione o <code>.env</code> para não ser enviado ao Github.</p><p>No projeto criado com <code>create-react-app</code> é obrigatório a variável começar com <code>REACT_APP_</code></p><p>⚠️ &nbsp;Essa variável vai ficar protegida apenas no código, porém fica visível nas requisições, um usuário avançado consegue acessá-la no console/network do navegador.</p><h3 id="-configurando-a-api-de-geolocaliza-o-">📍 Configurando a API de Geolocalização.</h3><p>Para simplificar, não vou criar várias pastas para organizar o projeto, ao invés disso vou manter todos os arquivos dentro de <code>src</code>.</p><p>Na pasta <code>src</code> crie um arquivo <code>apiMapBox.ts</code></p><pre class=" language-jsx"><code class=" language-jsx"><span class="token keyword">const</span> <span class="token constant">ACCESS_TOKEN_MAP_BOX</span> <span class="token operator">=</span> <span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">access_token=</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>process<span class="token punctuation">.</span>env<span class="token punctuation">.</span><span class="token constant">REACT_APP_ACCESS_TOKEN_MAP_BOX</span><span class="token interpolation-punctuation punctuation">}</span></span><span class="token template-punctuation string">`</span></span>
+
+<span class="token keyword">export</span> <span class="token keyword">const</span> <span class="token function-variable function">fetchLocalMapBox</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token parameter">local<span class="token operator">:</span> string</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span>
+<span class="token function">fetch</span><span class="token punctuation">(</span>
+  <span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string"><a class="vglnk" href="https://api.mapbox.com/geocoding/v5/mapbox.places/" rel="nofollow"><span>https</span><span>://</span><span>api</span><span>.</span><span>mapbox</span><span>.</span><span>com</span><span>/</span><span>geocoding</span><span>/</span><span>v5</span><span>/</span><span>mapbox</span><span>.</span><span>places</span><span>/</span></a></span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>local<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">.json?</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span><span class="token constant">ACCESS_TOKEN_MAP_BOX</span><span class="token interpolation-punctuation punctuation">}</span></span><span class="token template-punctuation string">`</span></span>
+<span class="token punctuation">)</span>
+  <span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token parameter">response</span> <span class="token operator">=&gt;</span> response<span class="token punctuation">.</span><span class="token function">json</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+  <span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token parameter">data</span> <span class="token operator">=&gt;</span> data<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre><p>O código acima usa a <a href="https://blog.rocketseat.com.br/javascript-assincrono-promises/">Fetch API</a> do JavaScript para buscar o local que o usuário informar e retorna os dados.</p><p>Exemplo:</p><pre class=" language-jsx"><code class=" language-jsx">https<span class="token operator">:</span><span class="token operator">/</span><span class="token operator">/</span>api<span class="token punctuation">.</span>mapbox<span class="token punctuation">.</span>com<span class="token operator">/</span>geocoding<span class="token operator">/</span>v5<span class="token operator">/</span>mapbox<span class="token punctuation">.</span>places<span class="token operator">/</span>Brasil<span class="token punctuation">.</span>json<span class="token operator">?</span>access_token<span class="token operator">=</span><span class="token constant">MAP_BOX_ACCESS_TOKEN</span>
+</code></pre><p>Resultado:</p><figure class="kg-card kg-image-card"><img src="./Mapas com React usando Leaflet_files/insomnia-blog-mapa-react-leaflet.png" class="kg-image lightense-target" alt="" srcset="https://blog.rocketseat.com.br/content/images/size/w600/2020/11/insomnia-blog-mapa-react-leaflet.png 600w, https://blog.rocketseat.com.br/content/images/size/w1000/2020/11/insomnia-blog-mapa-react-leaflet.png 1000w, https://blog.rocketseat.com.br/content/images/size/w1600/2020/11/insomnia-blog-mapa-react-leaflet.png 1600w, https://blog.rocketseat.com.br/content/images/size/w2400/2020/11/insomnia-blog-mapa-react-leaflet.png 2400w"></figure><p>Para acessar os endpoints do Mapbox, clique <em><a href="https://docs.mapbox.com/api/search/#endpoints">aqui</a>.</em></p><h3 id="-estilizando-a-aplica-o">💅 Estilizando a aplicação</h3><p>No arquivo <code>src/index.css</code>, substitua o conteúdo atual pelo código abaixo.</p><p>Basicamente reseta as margens, padding, outline, box-sizing e define a fonte Nunito e um tamanho padrão para os elementos HTML:</p><pre class=" language-jsx"><code class=" language-jsx"><span class="token operator">*</span> <span class="token punctuation">{</span>
+  margin<span class="token operator">:</span> <span class="token number">0</span><span class="token punctuation">;</span>
+  padding<span class="token operator">:</span> <span class="token number">0</span><span class="token punctuation">;</span>
+  outline<span class="token operator">:</span> <span class="token number">0</span><span class="token punctuation">;</span>
+  box<span class="token operator">-</span>sizing<span class="token operator">:</span> border<span class="token operator">-</span>box<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+body<span class="token punctuation">,</span>
+input<span class="token punctuation">,</span>
+button<span class="token punctuation">,</span>
+textarea <span class="token punctuation">{</span>
+  font<span class="token operator">:</span> <span class="token number">600</span> <span class="token number">18</span>px Nunito<span class="token punctuation">,</span> sans<span class="token operator">-</span>serif<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre><p>No arquivo <code>index.html</code> adicione a fonte <a href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800&amp;display=swap">Nunito</a> do projeto:</p><pre class=" language-jsx"><code class=" language-jsx"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>link</span>
+     <span class="token attr-name">href</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>&lt;<a class="vglnk" href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800&amp;display=swap" rel="nofollow"><span>https</span><span>://</span><span>fonts</span><span>.</span><span>googleapis</span><span>.</span><span>com</span><span>/</span><span>css2</span><span>?</span><span>family</span><span>=</span><span>Nunito</span><span>:</span><span>wght</span><span>@</span><span>600</span><span>;</span><span>700</span><span>;</span><span>800</span><span>&amp;</span><span>display</span><span>=</span><span>swap</span></a>&gt;<span class="token punctuation">"</span></span>
+     <span class="token attr-name">rel</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>stylesheet<span class="token punctuation">"</span></span>
+<span class="token punctuation">/&gt;</span></span>
+</code></pre><p>Arquivo <code>index.html</code> completo:</p><pre class=" language-jsx"><code class=" language-jsx"><span class="token doctype">&lt;!DOCTYPE html&gt;</span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>html</span> <span class="token attr-name">lang</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>en<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span><span class="token plain-text">
+  </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>head</span><span class="token punctuation">&gt;</span></span><span class="token plain-text">
+    </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>meta</span> <span class="token attr-name">charset</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>utf-8<span class="token punctuation">"</span></span> <span class="token punctuation">/&gt;</span></span><span class="token plain-text">
+    </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>link</span> <span class="token attr-name">rel</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>icon<span class="token punctuation">"</span></span> <span class="token attr-name">href</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>%PUBLIC_URL%/favicon.svg<span class="token punctuation">"</span></span> <span class="token punctuation">/&gt;</span></span><span class="token plain-text">
+    </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>meta</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>viewport<span class="token punctuation">"</span></span> <span class="token attr-name">content</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>width=device-width, initial-scale=1<span class="token punctuation">"</span></span> <span class="token punctuation">/&gt;</span></span><span class="token plain-text">
+    </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>meta</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>theme-color<span class="token punctuation">"</span></span> <span class="token attr-name">content</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>#000000<span class="token punctuation">"</span></span> <span class="token punctuation">/&gt;</span></span><span class="token plain-text">
+    </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>meta</span>
+      <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>description<span class="token punctuation">"</span></span>
+      <span class="token attr-name">content</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>Web site created using create-react-app<span class="token punctuation">"</span></span>
+    <span class="token punctuation">/&gt;</span></span><span class="token plain-text">
+    </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>link</span>
+      <span class="token attr-name">href</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>&lt;<a class="vglnk" href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800&amp;display=swap" rel="nofollow"><span>https</span><span>://</span><span>fonts</span><span>.</span><span>googleapis</span><span>.</span><span>com</span><span>/</span><span>css2</span><span>?</span><span>family</span><span>=</span><span>Nunito</span><span>:</span><span>wght</span><span>@</span><span>600</span><span>;</span><span>700</span><span>;</span><span>800</span><span>&amp;</span><span>display</span><span>=</span><span>swap</span></a>&gt;<span class="token punctuation">"</span></span>
+      <span class="token attr-name">rel</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>stylesheet<span class="token punctuation">"</span></span>
+    <span class="token punctuation">/&gt;</span></span><span class="token plain-text">
+
+    </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>title</span><span class="token punctuation">&gt;</span></span><span class="token plain-text">Entregas</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>title</span><span class="token punctuation">&gt;</span></span><span class="token plain-text">
+  </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>head</span><span class="token punctuation">&gt;</span></span><span class="token plain-text">
+  </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>body</span><span class="token punctuation">&gt;</span></span><span class="token plain-text">
+    </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>noscript</span><span class="token punctuation">&gt;</span></span><span class="token plain-text">You need to enable JavaScript to run this app.</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>noscript</span><span class="token punctuation">&gt;</span></span><span class="token plain-text">
+    </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>root<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span><span class="token plain-text">
+  </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>body</span><span class="token punctuation">&gt;</span></span><span class="token plain-text">
+</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>html</span><span class="token punctuation">&gt;</span></span>
+</code></pre><p>No arquivo <code>src/App.css</code>, substitua o conteúdo:</p><pre class=" language-jsx"><code class=" language-jsx">#page<span class="token operator">-</span>map <span class="token punctuation">{</span>
+  width<span class="token operator">:</span> <span class="token number">100</span>vw<span class="token punctuation">;</span>
+  height<span class="token operator">:</span> <span class="token number">100</span>vh<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+form<span class="token punctuation">.</span>landing<span class="token operator">-</span>page<span class="token operator">-</span>form <span class="token punctuation">{</span>
+  width<span class="token operator">:</span> <span class="token number">500</span>px<span class="token punctuation">;</span>
+
+  background<span class="token operator">:</span> #ffffff<span class="token punctuation">;</span>
+  border<span class="token operator">:</span> <span class="token number">1</span>px solid #d3e2e5<span class="token punctuation">;</span>
+  border<span class="token operator">-</span>radius<span class="token operator">:</span> <span class="token number">30</span>px<span class="token punctuation">;</span>
+
+  padding<span class="token operator">:</span> <span class="token number">20</span>px <span class="token number">40</span>px<span class="token punctuation">;</span>
+
+  position<span class="token operator">:</span> absolute<span class="token punctuation">;</span>
+  top<span class="token operator">:</span> <span class="token number">30</span>px<span class="token punctuation">;</span>
+  left<span class="token operator">:</span> <span class="token number">40</span>px<span class="token punctuation">;</span>
+
+  z<span class="token operator">-</span>index<span class="token operator">:</span> <span class="token number">1</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+#page<span class="token operator">-</span>map <span class="token punctuation">.</span>leaflet<span class="token operator">-</span>container <span class="token punctuation">{</span>
+  z<span class="token operator">-</span>index<span class="token operator">:</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+form<span class="token punctuation">.</span>landing<span class="token operator">-</span>page<span class="token operator">-</span>form fieldset <span class="token punctuation">{</span>
+  border<span class="token operator">:</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+form<span class="token punctuation">.</span>landing<span class="token operator">-</span>page<span class="token operator">-</span>form fieldset legend <span class="token punctuation">{</span>
+  width<span class="token operator">:</span> <span class="token number">100</span><span class="token operator">%</span><span class="token punctuation">;</span>
+
+  font<span class="token operator">-</span>size<span class="token operator">:</span> <span class="token number">32</span>px<span class="token punctuation">;</span>
+  line<span class="token operator">-</span>height<span class="token operator">:</span> <span class="token number">34</span>px<span class="token punctuation">;</span>
+  color<span class="token operator">:</span> #<span class="token number">5</span>c8599<span class="token punctuation">;</span>
+  font<span class="token operator">-</span>weight<span class="token operator">:</span> <span class="token number">700</span><span class="token punctuation">;</span>
+
+  border<span class="token operator">-</span>bottom<span class="token operator">:</span> <span class="token number">1</span>px solid #d3e2e5<span class="token punctuation">;</span>
+  margin<span class="token operator">-</span>bottom<span class="token operator">:</span> <span class="token number">20</span>px<span class="token punctuation">;</span>
+  padding<span class="token operator">-</span>bottom<span class="token operator">:</span> <span class="token number">20</span>px<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+form<span class="token punctuation">.</span>landing<span class="token operator">-</span>page<span class="token operator">-</span>form <span class="token punctuation">.</span>input<span class="token operator">-</span>block <span class="token operator">+</span> <span class="token punctuation">.</span>input<span class="token operator">-</span>block <span class="token punctuation">{</span>
+  margin<span class="token operator">-</span>top<span class="token operator">:</span> <span class="token number">24</span>px<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+form<span class="token punctuation">.</span>landing<span class="token operator">-</span>page<span class="token operator">-</span>form <span class="token punctuation">.</span>input<span class="token operator">-</span>block label <span class="token punctuation">{</span>
+  display<span class="token operator">:</span> flex<span class="token punctuation">;</span>
+  color<span class="token operator">:</span> #<span class="token number">8</span>fa7b3<span class="token punctuation">;</span>
+  margin<span class="token operator">-</span>bottom<span class="token operator">:</span> <span class="token number">8</span>px<span class="token punctuation">;</span>
+  line<span class="token operator">-</span>height<span class="token operator">:</span> <span class="token number">24</span>px<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+form<span class="token punctuation">.</span>landing<span class="token operator">-</span>page<span class="token operator">-</span>form <span class="token punctuation">.</span>input<span class="token operator">-</span>block label span <span class="token punctuation">{</span>
+  font<span class="token operator">-</span>size<span class="token operator">:</span> <span class="token number">14</span>px<span class="token punctuation">;</span>
+  color<span class="token operator">:</span> #<span class="token number">8</span>fa7b3<span class="token punctuation">;</span>
+  margin<span class="token operator">-</span>left<span class="token operator">:</span> <span class="token number">24</span>px<span class="token punctuation">;</span>
+  line<span class="token operator">-</span>height<span class="token operator">:</span> <span class="token number">24</span>px<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+form<span class="token punctuation">.</span>landing<span class="token operator">-</span>page<span class="token operator">-</span>form <span class="token punctuation">.</span>input<span class="token operator">-</span>block input <span class="token punctuation">{</span>
+  width<span class="token operator">:</span> <span class="token number">100</span><span class="token operator">%</span><span class="token punctuation">;</span>
+  background<span class="token operator">:</span> #f5f8fa<span class="token punctuation">;</span>
+  border<span class="token operator">:</span> <span class="token number">1</span>px solid #d3e2e5<span class="token punctuation">;</span>
+  border<span class="token operator">-</span>radius<span class="token operator">:</span> <span class="token number">20</span>px<span class="token punctuation">;</span>
+  outline<span class="token operator">:</span> none<span class="token punctuation">;</span>
+  color<span class="token operator">:</span> #<span class="token number">5</span>c8599<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+form<span class="token punctuation">.</span>landing<span class="token operator">-</span>page<span class="token operator">-</span>form <span class="token punctuation">.</span>input<span class="token operator">-</span>block input <span class="token punctuation">{</span>
+  height<span class="token operator">:</span> <span class="token number">44</span>px<span class="token punctuation">;</span>
+  padding<span class="token operator">:</span> <span class="token number">0</span> <span class="token number">16</span>px<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+form<span class="token punctuation">.</span>landing<span class="token operator">-</span>page<span class="token operator">-</span>form button<span class="token punctuation">.</span>confirm<span class="token operator">-</span>button <span class="token punctuation">{</span>
+  margin<span class="token operator">-</span>top<span class="token operator">:</span> <span class="token number">34</span>px<span class="token punctuation">;</span>
+
+  width<span class="token operator">:</span> <span class="token number">100</span><span class="token operator">%</span><span class="token punctuation">;</span>
+  height<span class="token operator">:</span> <span class="token number">64</span>px<span class="token punctuation">;</span>
+  border<span class="token operator">:</span> <span class="token number">0</span><span class="token punctuation">;</span>
+  cursor<span class="token operator">:</span> pointer<span class="token punctuation">;</span>
+  background<span class="token operator">-</span>color<span class="token operator">:</span> #<span class="token number">4254</span>f5<span class="token punctuation">;</span>
+  border<span class="token operator">-</span>radius<span class="token operator">:</span> <span class="token number">20</span>px<span class="token punctuation">;</span>
+  color<span class="token operator">:</span> #ffffff<span class="token punctuation">;</span>
+  font<span class="token operator">-</span>weight<span class="token operator">:</span> <span class="token number">800</span><span class="token punctuation">;</span>
+
+  transition<span class="token operator">:</span> background<span class="token operator">-</span>color <span class="token number">0.2</span>s<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+form<span class="token punctuation">.</span>landing<span class="token operator">-</span>page<span class="token operator">-</span>form button<span class="token punctuation">.</span>confirm<span class="token operator">-</span>button<span class="token operator">:</span>hover <span class="token punctuation">{</span>
+  background<span class="token operator">-</span>color<span class="token operator">:</span> #<span class="token number">6</span>c79f5<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">/* Pop Up - Marker */</span>
+
+#page<span class="token operator">-</span>map <span class="token punctuation">.</span>map<span class="token operator">-</span>popup <span class="token punctuation">.</span>leaflet<span class="token operator">-</span>popup<span class="token operator">-</span>content<span class="token operator">-</span>wrapper <span class="token punctuation">{</span>
+  background<span class="token operator">:</span> <span class="token function">rgba</span><span class="token punctuation">(</span><span class="token number">255</span><span class="token punctuation">,</span> <span class="token number">255</span><span class="token punctuation">,</span> <span class="token number">255</span><span class="token punctuation">,</span> <span class="token number">0.8</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  border<span class="token operator">-</span>radius<span class="token operator">:</span> <span class="token number">20</span>px<span class="token punctuation">;</span>
+  box<span class="token operator">-</span>shadow<span class="token operator">:</span> none<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+#page<span class="token operator">-</span>map <span class="token punctuation">.</span>map<span class="token operator">-</span>popup <span class="token punctuation">.</span>leaflet<span class="token operator">-</span>popup<span class="token operator">-</span>content h3 <span class="token punctuation">{</span>
+  color<span class="token operator">:</span> #<span class="token number">0089</span>a5<span class="token punctuation">;</span>
+  font<span class="token operator">-</span>size<span class="token operator">:</span> <span class="token number">20</span>px<span class="token punctuation">;</span>
+  font<span class="token operator">-</span>weight<span class="token operator">:</span> bold<span class="token punctuation">;</span>
+  margin<span class="token operator">:</span> <span class="token number">8</span>px <span class="token number">12</span>px<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+#page<span class="token operator">-</span>map <span class="token punctuation">.</span>map<span class="token operator">-</span>popup <span class="token punctuation">.</span>leaflet<span class="token operator">-</span>popup<span class="token operator">-</span>content p <span class="token punctuation">{</span>
+  color<span class="token operator">:</span> #<span class="token number">042</span>f38<span class="token punctuation">;</span>
+  font<span class="token operator">-</span>size<span class="token operator">:</span> <span class="token number">12</span>px<span class="token punctuation">;</span>
+  font<span class="token operator">-</span>weight<span class="token operator">:</span> bold<span class="token punctuation">;</span>
+  margin<span class="token operator">:</span> <span class="token number">8</span>px <span class="token number">12</span>px<span class="token punctuation">;</span>
+  line<span class="token operator">-</span>height<span class="token operator">:</span> <span class="token number">15</span>px<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+#page<span class="token operator">-</span>map <span class="token punctuation">.</span>map<span class="token operator">-</span>popup <span class="token punctuation">.</span>leaflet<span class="token operator">-</span>popup<span class="token operator">-</span>tip<span class="token operator">-</span>container <span class="token punctuation">{</span>
+  display<span class="token operator">:</span> none<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">/* Styling react select */</span>
+
+<span class="token punctuation">.</span>filter__control <span class="token punctuation">{</span>
+  border<span class="token operator">-</span>radius<span class="token operator">:</span> <span class="token number">20</span>px <span class="token operator">!</span>important<span class="token punctuation">;</span>
+
+  width<span class="token operator">:</span> <span class="token number">100</span><span class="token operator">%</span> <span class="token operator">!</span>important<span class="token punctuation">;</span>
+  background<span class="token operator">:</span> #f5f8fa <span class="token operator">!</span>important<span class="token punctuation">;</span>
+  border<span class="token operator">:</span> <span class="token number">1</span>px solid #d3e2e5 <span class="token operator">!</span>important<span class="token punctuation">;</span>
+  border<span class="token operator">-</span>radius<span class="token operator">:</span> <span class="token number">20</span>px <span class="token operator">!</span>important<span class="token punctuation">;</span>
+  outline<span class="token operator">:</span> none <span class="token operator">!</span>important<span class="token punctuation">;</span>
+  color<span class="token operator">:</span> #<span class="token number">5</span>c8599 <span class="token operator">!</span>important<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token punctuation">.</span>filter__option <span class="token punctuation">{</span>
+  background<span class="token operator">:</span> #f5f8fa <span class="token operator">!</span>important<span class="token punctuation">;</span>
+  color<span class="token operator">:</span> #<span class="token number">5</span>c8599 <span class="token operator">!</span>important<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token punctuation">.</span>filter__option<span class="token operator">--</span>is<span class="token operator">-</span>focused <span class="token punctuation">{</span>
+  background<span class="token operator">:</span> #d3e2e5 <span class="token operator">!</span>important<span class="token punctuation">;</span>
+  color<span class="token operator">:</span> #<span class="token number">010101</span> <span class="token operator">!</span>important<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre><ul><li><strong>Detalhes importantes sobre a estilização</strong>:</li></ul><p>Se procurar no código alguma referência por <code>leaflet-popup-content-wrapper</code> você não vai encontrar. Utilizei o inspecionador de código do Navegador para saber quais classes o <strong>Leaflet</strong> usa para fazermos as customizações nelas.</p><p>A mesma coisa para a lib do <code>react-select</code>, no arquivo <code>App.tsx</code> que veremos a seguir. Adicionei <code>classNamePrefix="filter"</code>, um prefixo que na DOM aparece, por isso tem o <code>filter__control</code>, por exemplo. Você não encontra uma referência a essa classe no código, ela só aparece quando a tela é montada no navegador.</p><p>Adicionamos <code>!important</code> para forçar a estilização e sobrepor os valores padrão que vem na biblioteca.</p><p>Último aspecto importante é que o formulário fica flutuando na tela enquanto o mapa fica por baixo. Para isso usamos o <a href="https://www.w3schools.com/cssref/pr_pos_z-index.asp">z-index</a> e <a href="https://www.w3schools.com/cssref/pr_class_position.asp">position</a>: <em>absolute</em> para o formulário.</p><p>O restante da estilização é mais simples.</p><p>Por fim, para concluir a aplicação, vamos criar a lógica e adicionar os componentes necessários.</p><h3 id="-adicionando-o-mapa-e-o-formul-rio">🗺️ Adicionando o Mapa e o Formulário</h3><p>Adicione os arquivos <strong>SVG</strong> dentro da pasta <code>src</code> — <a href="https://github.com/rocketseat-content/blog-react-maps-leaflet/blob/main/src/package.svg">package.svg</a> | <a href="https://github.com/rocketseat-content/blog-react-maps-leaflet/blob/main/src/pin.svg">pin.svg</a></p><p>No arquivo <code>src/App.tsx</code> substitua o conteúdo por:</p><figure class="kg-card kg-code-card"><pre class=" language-tsx"><code class=" language-tsx">
+001: import "leaflet/dist/leaflet.css";
+002: 
+003: import React, { FormEvent, useState } from "react";
+004: import { Map, Marker, Popup, TileLayer } from "react-leaflet";
+005: import Leaflet from "leaflet";
+006: import { v4 as uuidv4 } from "uuid";
+007: 
+008: import { fetchLocalMapBox } from "./apiMapBox";
+009: import AsyncSelect from "react-select/async";
+010: 
+011: import mapPackage from "./package.svg";
+012: import mapPin from "./pin.svg";
+013: 
+014: import "./App.css";
+015: 
+016: const initialPosition = { lat: -22.2154042, lng: -54.8331331 };
+017: 
+018: const mapPackageIcon = Leaflet.icon({
+019:   iconUrl: mapPackage,
+020:   iconSize: [58, 68],
+021:   iconAnchor: [29, 68],
+022:   popupAnchor: [170, 2],
+023: });
+024: 
+025: const mapPinIcon = Leaflet.icon({
+026:   iconUrl: mapPin,
+027:   iconSize: [58, 68],
+028:   iconAnchor: [29, 68],
+029:   popupAnchor: [170, 2],
+030: });
+031: 
+032: interface Delivery {
+033:   id: string;
+034:   name: string;
+035:   address: string;
+036:   complement: string;
+037:   latitude: number;
+038:   longitude: number;
+039: }
+040: 
+041: type Position = {
+042:   longitude: number;
+043:   latitude: number;
+044: };
+045: 
+046: function App() {
+047:   const [deliveries, setDeliveries] = useState&lt;Delivery[]&gt;([]);
+048: 
+049:   const [position, setPosition] = useState&lt;Position | null&gt;(null);
+050: 
+051:   const [name, setName] = useState("");
+052:   const [complement, setComplement] = useState("");
+053:   const [address, setAddress] = useState&lt;{
+054:     label: string;
+055:     value: string;
+056:   } | null&gt;(null);
+057: 
+058:   const [location, setLocation] = useState(initialPosition);
+059: 
+060:   const loadOptions = async (inputValue: any, callback: any) =&gt; {
+061:     if (inputValue.length &lt; 5) return;
+062:     let places: any = [];
+063:     const response = await fetchLocalMapBox(inputValue);
+064:     response.features.map((item: any) =&gt; {
+065:       places.push({
+066:         label: item.place_name,
+067:         value: item.place_name,
+068:         coords: item.center,
+069:         place: item.place_name,
+070:       });
+071:     });
+072: 
+073:     callback(places);
+074:   };
+075: 
+076:   const handleChangeSelect = (event: any) =&gt; {
+077:     console.log("changed", event);
+078:     setPosition({
+079:       longitude: event.coords[0],
+080:       latitude: event.coords[1],
+081:     });
+082: 
+083:     setAddress({ label: event.place, value: event.place });
+084: 
+085:     setLocation({
+086:       lng: event.coords[0],
+087:       lat: event.coords[1],
+088:     });
+089:   };
+090: 
+091:   async function handleSubmit(event: FormEvent) {
+092:     event.preventDefault();
+093: 
+094:     if (!address || !name) return;
+095: 
+096:     setDeliveries([
+097:       ...deliveries,
+098:       {
+099:         id: uuidv4(),
+100:         name,
+101:         address: address?.value || "",
+102:         complement,
+103:         latitude: location.lat,
+104:         longitude: location.lng,
+105:       },
+106:     ]);
+107: 
+108:     setName("");
+109:     setAddress(null);
+110:     setComplement("");
+111:     setPosition(null);
+112:   }
+113: 
+114:   return (
+115:     &lt;div id="page-map"&gt;
+116:       &lt;main&gt;
+117:         &lt;form onSubmit={handleSubmit} className="landing-page-form"&gt;
+118:           &lt;fieldset&gt;
+119:             &lt;legend&gt;Entregas&lt;/legend&gt;
+120: 
+121:             &lt;div className="input-block"&gt;
+122:               &lt;label htmlFor="name"&gt;Nome&lt;/label&gt;
+123:               &lt;input
+124:                 id="name"
+125:                 placeholder="Digite seu nome"
+126:                 value={name}
+127:                 onChange={(event) =&gt; setName(event.target.value)}
+128:               /&gt;
+129:             &lt;/div&gt;
+130: 
+131:             &lt;div className="input-block"&gt;
+132:               &lt;label htmlFor="address"&gt;Endere√ßo&lt;/label&gt;
+133:               &lt;AsyncSelect
+134:                 placeholder="Digite seu endere√ßo..."
+135:                 classNamePrefix="filter"
+136:                 cacheOptions
+137:                 loadOptions={loadOptions}
+138:                 onChange={handleChangeSelect}
+139:                 value={address}
+140:               /&gt;
+141:             &lt;/div&gt;
+142: 
+143:             &lt;div className="input-block"&gt;
+144:               &lt;label htmlFor="complement"&gt;Complemento&lt;/label&gt;
+145:               &lt;input
+146:                 placeholder="Apto / Nr / Casa..."
+147:                 id="complement"
+148:                 value={complement}
+149:                 onChange={(event) =&gt; setComplement(event.target.value)}
+150:               /&gt;
+151:             &lt;/div&gt;
+152:           &lt;/fieldset&gt;
+153: 
+154:           &lt;button className="confirm-button" type="submit"&gt;
+155:             Confirmar
+156:           &lt;/button&gt;
+157:         &lt;/form&gt;
+158:       &lt;/main&gt;
+159: 
+160:       &lt;Map
+161:         center={location}
+162:         zoom={15}
+163:         style={{ width: "100%", height: "100%" }}
+164:       &gt;
+165:         {/* &lt;TileLayer url="<a class="vglnk" href="https://a.tile.openstreetmap.org/%7Bz%7D/%7Bx%7D/%7By%7D.png" rel="nofollow"><span>https</span><span>://</span><span>a</span><span>.</span><span>tile</span><span>.</span><span>openstreetmap</span><span>.</span><span>org</span><span>/{</span><span>z</span><span>}/{</span><span>x</span><span>}/{</span><span>y</span><span>}.</span><span>png</span></a>" /&gt; */}
+166:         &lt;TileLayer
+167:           url={`<a class="vglnk" href="https://api.mapbox.com/styles/v1/mapbox/light-v10/tiles/256/%7Bz%7D/%7Bx%7D/%7By%7D@2x?access_token=${process.env.REACT_APP_ACCESS_TOKEN_MAP_BOX" rel="nofollow"><span>https</span><span>://</span><span>api</span><span>.</span><span>mapbox</span><span>.</span><span>com</span><span>/</span><span>styles</span><span>/</span><span>v1</span><span>/</span><span>mapbox</span><span>/</span><span>light</span><span>-</span><span>v10</span><span>/</span><span>tiles</span><span>/</span><span>256</span><span>/{</span><span>z</span><span>}/{</span><span>x</span><span>}/{</span><span>y</span><span>}@</span><span>2x</span><span>?</span><span>access</span><span>_</span><span>token</span><span>=${</span><span>process</span><span>.</span><span>env</span><span>.</span><span>REACT</span><span>_</span><span>APP</span><span>_</span><span>ACCESS</span><span>_</span><span>TOKEN</span><span>_</span><span>MAP</span><span>_</span><span>BOX</span></a>}`}
+168:         /&gt;
+169: 
+170:         {position &amp;&amp; (
+171:           &lt;Marker
+172:             icon={mapPinIcon}
+173:             position={[position.latitude, position.longitude]}
+174:           &gt;&lt;/Marker&gt;
+175:         )}
+176: 
+177:         {deliveries.map((delivery) =&gt; (
+178:           &lt;Marker
+179:             key={delivery.id}
+180:             icon={mapPackageIcon}
+181:             position={[delivery.latitude, delivery.longitude]}
+182:           &gt;
+183:             &lt;Popup
+184:               closeButton={false}
+185:               minWidth={240}
+186:               maxWidth={240}
+187:               className="map-popup"
+188:             &gt;
+189:               &lt;div&gt;
+190:                 &lt;h3&gt;{delivery.name}&lt;/h3&gt;
+191:                 &lt;p&gt;
+192:                   {delivery.address} - {delivery.complement}
+193:                 &lt;/p&gt;
+194:               &lt;/div&gt;
+195:             &lt;/Popup&gt;
+196:           &lt;/Marker&gt;
+197:         ))}
+198:       &lt;/Map&gt;
+199:     &lt;/div&gt;
+200:   );
+201: }
+202: 
+203: export default App;
+204:
+</code></pre><figcaption>Código do App.tsx - Formulário e Mapa do site Entregas</figcaption></figure><p><strong>Comentários por linha de código</strong>:</p><p>001 - importa a estilização da biblioteca leaflet;</p><p>002 a 014 - importa os arquivos e bibliotecas necessárias;</p><p>016 - declara a posição inicial que o mapa será renderizado (poderia usar API do navegador para pegar a localização atual do usuário, dentro do hook useEffect);</p><p>018 a 030 - <a href="https://leafletjs.com/examples/custom-icons/">customiza</a> os marcadores <strong>package.svg</strong> e <strong>pin.svg</strong> para renderizar no mapa;</p><p>032 a 039 - define o contrato da interface <strong>Delivery</strong> com seus atributos;</p><p>041 a 044 - define o tipo <strong>Position</strong> que será explicado mais a frente seu caso de uso;</p><p>046 - começamos a criar a função App que irá conter toda a lógica do formulário e da renderização do mapa;</p><p>047 a 058 - são definidas as variáveis de estado do componente App usando <strong>useState</strong>.</p><ul><li><code>deliveries</code>: array que vai ter todos os dados preenchidos no formulário quando o mesmo for salvo;</li><li><code>position</code>: objeto que representa uma coordenada geográfica, será utilizado para mostrar o marcador (pin.svg) quando o usuário digitar sua localização;</li><li><code>name</code>, <code>complement</code>, <code>address</code>: armazenam os dados do formulário;</li><li><code>location</code>: variável auxiliar para centralizar o mapa assim que usuário escolhe um endereço.</li></ul><p>060 a 074 - define a função <code>loadOptions</code> que será disparada toda vez que o usuário digita algum endereço no input. Contém a implementação da busca do local (endereço) usando a API, retorna em formato de um array as opções para o autocomplete, o array é enviado pela função de retorno <code>callback(places)</code> que preencherá as <em>options</em> do <em>select</em>;</p><p>076 a 088 - define a função <code>handleChangeSelect</code> executada quando o usuário escolhe uma localização — &nbsp;adicionamos um marcador com <strong>setPosition</strong>, &nbsp;centralizamos o mapa com <strong>setLocation</strong> e adicionamos o endereço no estado com <strong>setAddress</strong>;</p><p>090 a 111 - define a função <code>handleSubmit</code>, disparada assim que usuário clica no botão confirmar submetendo o formulário.</p><ul><li>Primeiro ela previne o comportamento padrão do navegador de fazer <em>refresh</em> na tela;</li><li>Verifica se usuário informou o endereço ou nome — se não, o fluxo é interrompido;</li><li>Adiciona no array de <code>deliveries</code> o objeto <strong>Delivery</strong> com suas propriedades. O <em>id</em> é gerado pelo <strong>uuidv4</strong> em formato de string;</li><li>Por fim limpa os campos <em>name</em>, <em>address</em>, <em>complement</em> e reseta o <em>position</em> para remover o marcador <strong>pin.svg</strong> da tela.</li></ul><p>113 a 199 - renderiza o mapa e o formulário na tela ;</p><p>132 a 139 - adiciona o componente <code>AsyncSelect</code> do React Select:</p><pre class=" language-tsx"><code class=" language-tsx">&lt;AsyncSelect
+     placeholder="Digite seu endereço..."
+     classNamePrefix="filter"
+     cacheOptions
+     loadOptions={loadOptions}
+     onChange={handleChangeSelect}
+     value={address}
+ /&gt;
+</code></pre><p>Como o próprio nome sugere, ele irá se comportar de maneira assíncrona e, enquanto estiver buscando os dados da API para carregar o <em>options</em> do <em>select</em>, vai exibir um <strong><em>loading</em></strong> no componente.</p><p>159 a 197 - monta em tela o componente Map</p><ul><li>160 - Centraliza na posição inicial passando <em>location</em></li><li>165 - <em>TileLayer</em> é o desenho do mapa — deixei comentado a <em>TileLayer</em> padrão, que não é muito bonito;</li><li>169 - Exibe o marcador da posição que o usuário escolheu no input do endereço, ele sai da tela assim que o usuário clica em confirmar do formulário;</li><li>176 a 196 - a cada elemento do array exibe um marcador (<strong>package.svg</strong>) na posição definida no objeto <em>delivery.</em> Quando usuário clica no marcador aparece um <strong>PopUp</strong> com os dados sobre a <strong>entrega;</strong></li></ul><p>202 - exporta a função <code>App</code> que será importada no arquivo <code>index.tsx</code></p><p>Fim da aplicação.</p><p>Esse é o resultado que temos no final da implementação:</p><figure class="kg-card kg-image-card kg-card-hascaption"><img src="./Mapas com React usando Leaflet_files/blog-final-utilizando-mapas-no-react-com-leaflet.png" class="kg-image lightense-target" alt="" srcset="https://blog.rocketseat.com.br/content/images/size/w600/2020/11/blog-final-utilizando-mapas-no-react-com-leaflet.png 600w, https://blog.rocketseat.com.br/content/images/size/w1000/2020/11/blog-final-utilizando-mapas-no-react-com-leaflet.png 1000w, https://blog.rocketseat.com.br/content/images/size/w1600/2020/11/blog-final-utilizando-mapas-no-react-com-leaflet.png 1600w, https://blog.rocketseat.com.br/content/images/size/w2400/2020/11/blog-final-utilizando-mapas-no-react-com-leaflet.png 2400w"><figcaption>Imagem do Site Entregas - final do post</figcaption></figure><p>Se quiser conferir o código fonte do projeto, clique <a href="https://github.com/rocketseat-content/blog-react-maps-leaflet">aqui</a>.</p><h3 id="-conclus-o">👊 Conclusão</h3><p>Construímos uma aplicação de pequeno porte, porém com um conteúdo rico em informações sobre integração de mapas no React em 2020, usando React Hooks.</p><p>A escolha do Leaflet é interessante, porque é bem fácil de utilizar, a integração com React é muito boa e o suporte ao TypeScript funciona bem;</p><p>A escolha do <code>react-select</code> para autocomplete foi devido a sua UI bem bonita, fácil de customizar e a DX (experiência de desenvolvimento) ser agradável com uma documentação excelente. </p><p>A documentação do <code>react-select</code> recomenda que seja utilizado CSS-in-JS como exemplo o <code>styled-components</code>, mas, para fins didáticos e práticos, usei o CSS; React-select é bem performática, pesquisei outras libs para fazer o autocomplete mas algumas tinham dependência com Google Places do Google Maps, por exemplo. Como react-select é agnóstica, serviu bem para esse propósito.</p><p>Segue aqui alguns <strong>desafios</strong> para praticar um pouco mais:</p><h3 id="-desafios-">🔥 Desafios:</h3><ul><li>Organizar os arquivos em pastas, separando os componentes;</li><li>Criar o botão <em>reset</em> do formulário para apagar os dados digitados e o marcador do mapa caso usuário já tenha escolhido um endereço;</li><li>Adicionar horário de entrega;</li><li>Criar um botão para abrir a rota no Google Maps a partir da localização da entrega;</li><li>Criar um botão no PopUp dos detalhes da entrega para remover a entrega e outro para editar;</li><li>Melhorar a UI do PopUp;</li><li>Replicar esse mesmo projeto usando o NextJS — bastante coisa deverão ser alteradas.</li></ul><p>🚀 Fez algum <strong>desafio</strong>? Show! Agora você está ficando mais <strong>expert</strong>! 😎</p><p>Posta o <strong>link do repositório</strong> aqui nos <strong>comentários</strong>.</p><p>E aí, o que achou desse <strong>post</strong>?</p><p>Espero que tenha <strong>curtido</strong>! 💜</p><p><em><strong>O aprendizado é contínuo e sempre haverá um próximo nível!</strong> 🚀</em></p>
+		</div>
+		<div class="section-post-authors post-authors flex  post-author-single first">
+	<div class="author-label">
+		<span>Read more posts by this author</span>
+	</div>
+	<div class="author-wrap flex">
+		<a href="https://blog.rocketseat.com.br/author/thiago-marinho/" class="item-link-overlay"></a>
+		<div class="author-profile-image" style="background-image: url(https://blog.rocketseat.com.br/content/images/2021/03/profile-pic--4-.png)"></div>
+		<div class="author-content">
+			<h4 class="is-bio no-cover-image"><a href="https://blog.rocketseat.com.br/author/thiago-marinho/">Thiago Marinho</a></h4>
+			<p>Dev Apaixonado por Tecnologia &amp; Educação!
+
+Evolua rápido como a tecnologia, aprendizado é contínuo e sempre haverá um próximo nível. Boost Yourself! 🚀</p>
+		</div>
+	</div>
+</div>		<div class="post-meta">
+			<div class="post-share">
+	<a class="twitter" href="https://twitter.com/intent/tweet?text=Mapas%20com%20React%20usando%20Leaflet&amp;url=https://blog.rocketseat.com.br/mapas-com-react-usando-leaflet/" onclick="window.open(this.href, &#39;twitter-share&#39;, &#39;width=550,height=235&#39;);return false;"><svg class="global-svg" role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M23.954 4.569c-.885.389-1.83.654-2.825.775 1.014-.611 1.794-1.574 2.163-2.723-.951.555-2.005.959-3.127 1.184-.896-.959-2.173-1.559-3.591-1.559-2.717 0-4.92 2.203-4.92 4.917 0 .39.045.765.127 1.124C7.691 8.094 4.066 6.13 1.64 3.161c-.427.722-.666 1.561-.666 2.475 0 1.71.87 3.213 2.188 4.096-.807-.026-1.566-.248-2.228-.616v.061c0 2.385 1.693 4.374 3.946 4.827-.413.111-.849.171-1.296.171-.314 0-.615-.03-.916-.086.631 1.953 2.445 3.377 4.604 3.417-1.68 1.319-3.809 2.105-6.102 2.105-.39 0-.779-.023-1.17-.067 2.189 1.394 4.768 2.209 7.557 2.209 9.054 0 13.999-7.496 13.999-13.986 0-.209 0-.42-.015-.63.961-.689 1.8-1.56 2.46-2.548l-.047-.02z"></path></svg></a>
+	<a class="facebook" href="https://www.facebook.com/sharer/sharer.php?u=https://blog.rocketseat.com.br/mapas-com-react-usando-leaflet/" onclick="window.open(this.href, &#39;facebook-share&#39;,&#39;width=580,height=296&#39;);return false;"><svg class="global-svg" role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M23.9981 11.9991C23.9981 5.37216 18.626 0 11.9991 0C5.37216 0 0 5.37216 0 11.9991C0 17.9882 4.38789 22.9522 10.1242 23.8524V15.4676H7.07758V11.9991H10.1242V9.35553C10.1242 6.34826 11.9156 4.68714 14.6564 4.68714C15.9692 4.68714 17.3424 4.92149 17.3424 4.92149V7.87439H15.8294C14.3388 7.87439 13.8739 8.79933 13.8739 9.74824V11.9991H17.2018L16.6698 15.4676H13.8739V23.8524C19.6103 22.9522 23.9981 17.9882 23.9981 11.9991Z"></path></svg></a>
+	<a class="copy" id="copy" data-clipboard-target="#link-value"><svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.33 13.04h-4.155v4.154h-2.078v-4.155H9.942v-2.077h4.155V6.806h2.078v4.156h4.154v2.077zM8.902 18.58a6.582 6.582 0 0 1 0-13.162c.068 0 .135.007.202.009a8.874 8.874 0 0 0-.001 13.144c-.067 0-.133.009-.2.009zm6.194-15.484a8.876 8.876 0 0 0-3.087.56A8.904 8.904 0 0 0 0 12a8.903 8.903 0 0 0 8.903 8.905 8.893 8.893 0 0 0 3.103-.563 8.854 8.854 0 0 0 3.09.563A8.903 8.903 0 0 0 24 12a8.904 8.904 0 0 0-8.903-8.903z"></path></svg></a>
+	<span class="copy-popup">The link has been copied!</span>
+	<input type="text" value="https://blog.rocketseat.com.br/mapas-com-react-usando-leaflet/" id="link-value">
+</div>		</div>
+	</div>
+</article>
+<aside class="section-prev-next">
+    <div class="prev-next-wrap">
+        <a href="https://blog.rocketseat.com.br/como-renomear-varios-arquivos-de-uma-vez-usando-o-terminal/" class="next-post post tag-linux tag-terminal tag-back-end is-image">
+            <div class="prev-next-image" style="background-image: url(https://blog.rocketseat.com.br/content/images/2020/11/thumb-como-renomear-varios-arquivos-de-uma-vez-usando-o-terminal.jpg)"></div>
+            <section class="prev-next-title">
+                <h5>Post anterior</h5>
+                <h3>Como renomear vários arquivos de uma vez usando o terminal</h3>
+            </section>
+        </a>
+    </div>
+</aside><div class="section-disqus">
+	
+
+<div id="disqus_thread"><iframe id="dsq-app8420" name="dsq-app8420" allowtransparency="true" frameborder="0" scrolling="no" tabindex="0" title="Disqus" width="100%" src="./Mapas com React usando Leaflet_files/saved_resource.html" style="width: 1px !important; min-width: 100% !important; border: none !important; overflow: hidden !important; height: 3912px !important;" horizontalscrolling="no" verticalscrolling="no"></iframe></div></div>
+
+			</div>
+			<footer class="section-footer">
+	<div class="footer-wrap wrap flex">
+		<div class="footer-logo flex">
+			<a class="is-logo" href="https://blog.rocketseat.com.br/"><img src="./Mapas com React usando Leaflet_files/logo-black-blog-rocketseat.png" alt="Blog da Rocketseat"></a>
+		</div>
+		<div class="footer-nav">
+			<ul class="nav-list">
+				
+<li class="nav-list-item">
+	<a href="https://blog.rocketseat.com.br/" class="nav-link">HOME</a>
+	<span class="nav-dot"></span>
+</li>
+<li class="nav-list-item">
+	<a href="https://blog.rocketseat.com.br/tag/nodejs/" class="nav-link">BACK END</a>
+	<span class="nav-dot"></span>
+</li>
+<li class="nav-list-item">
+	<a href="https://blog.rocketseat.com.br/tag/reactjs/" class="nav-link">FRONT END</a>
+	<span class="nav-dot"></span>
+</li>
+<li class="nav-list-item">
+	<a href="https://blog.rocketseat.com.br/tag/react-native/" class="nav-link">MOBILE</a>
+	<span class="nav-dot"></span>
+</li>
+
+			</ul>
+		</div>
+		<div class="footer-social-links flex">
+			<a href="https://www.facebook.com/rocketseat" aria-label="link Facebook"><svg class="global-svg" role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M23.9981 11.9991C23.9981 5.37216 18.626 0 11.9991 0C5.37216 0 0 5.37216 0 11.9991C0 17.9882 4.38789 22.9522 10.1242 23.8524V15.4676H7.07758V11.9991H10.1242V9.35553C10.1242 6.34826 11.9156 4.68714 14.6564 4.68714C15.9692 4.68714 17.3424 4.92149 17.3424 4.92149V7.87439H15.8294C14.3388 7.87439 13.8739 8.79933 13.8739 9.74824V11.9991H17.2018L16.6698 15.4676H13.8739V23.8524C19.6103 22.9522 23.9981 17.9882 23.9981 11.9991Z"></path></svg></a>
+			<a href="https://twitter.com/rocketseat" aria-label="link Twitter"><svg class="global-svg" role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M23.954 4.569c-.885.389-1.83.654-2.825.775 1.014-.611 1.794-1.574 2.163-2.723-.951.555-2.005.959-3.127 1.184-.896-.959-2.173-1.559-3.591-1.559-2.717 0-4.92 2.203-4.92 4.917 0 .39.045.765.127 1.124C7.691 8.094 4.066 6.13 1.64 3.161c-.427.722-.666 1.561-.666 2.475 0 1.71.87 3.213 2.188 4.096-.807-.026-1.566-.248-2.228-.616v.061c0 2.385 1.693 4.374 3.946 4.827-.413.111-.849.171-1.296.171-.314 0-.615-.03-.916-.086.631 1.953 2.445 3.377 4.604 3.417-1.68 1.319-3.809 2.105-6.102 2.105-.39 0-.779-.023-1.17-.067 2.189 1.394 4.768 2.209 7.557 2.209 9.054 0 13.999-7.496 13.999-13.986 0-.209 0-.42-.015-.63.961-.689 1.8-1.56 2.46-2.548l-.047-.02z"></path></svg></a>
+			
+
+		</div>
+	</div>
+	<div class="footer-copyright">
+		© 2021 <a href="https://blog.rocketseat.com.br/">Blog da Rocketseat</a>. Feito com &lt;3.
+		Published with <a href="https://ghost.org/">Ghost</a>.
+	</div>
+</footer>					</div>
+		<div class="section-search flex is-load" id="search">
+	<div class="search-close"><svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M15.4285714,12 L24,20.5714286 L20.5714286,24 L12,15.4285714 L3.42857143,24 L3.55271368e-15,20.5714286 L8.57142857,12 L5.32907052e-15,3.42857143 L3.42857143,3.55271368e-15 L12,8.57142857 L20.5714286,3.55271368e-15 L24,3.42857143 L15.4285714,12 Z"></path></svg></div>
+	<div class="search-image" style="background-image: url(/content/images/2020/10/search_blog_rocketseat.png)">
+	</div>
+	<div class="search-wrap">
+		<div class="search-content">
+			<form class="search-form flex" onsubmit="return false">
+				<input type="text" class="search-input" placeholder="Palavras-chave..." aria-label="Palavras-chave...">
+			</form>
+			<div class="search-meta">
+				<span class="search-info-wrap">Digite no mínimo 3 caracteres</span>
+				<span class="search-counter-wrap hide">
+					<span class="counter-results">0</span>
+				Resultados</span>
+			</div>
+			<div class="search-results">
+			</div>
+			<div class="search-suggestion flex">
+				<div class="search-suggestion-tags">
+	<h3>Posso te sugerir um assunto?</h3>
+	<a class="post-tag global-tag" href="https://blog.rocketseat.com.br/tag/react-native/">React Native</a>
+	<a class="post-tag global-tag" href="https://blog.rocketseat.com.br/tag/react/">react</a>
+	<a class="post-tag global-tag" href="https://blog.rocketseat.com.br/tag/javascript/">javascript</a>
+	<a class="post-tag global-tag" href="https://blog.rocketseat.com.br/tag/reactjs/">ReactJS</a>
+	<a class="post-tag global-tag" href="https://blog.rocketseat.com.br/tag/nodejs/">NodeJS</a>
+	<a class="post-tag global-tag" href="https://blog.rocketseat.com.br/tag/expressjs/">expressjs</a>
+	<a class="post-tag global-tag" href="https://blog.rocketseat.com.br/tag/backend/">Backend</a>
+	<a class="post-tag global-tag" href="https://blog.rocketseat.com.br/tag/front-end/">Front End</a>
+	<a class="post-tag global-tag" href="https://blog.rocketseat.com.br/tag/redux/">redux</a>
+	<a class="post-tag global-tag" href="https://blog.rocketseat.com.br/tag/adonisjs/">AdonisJS</a>
+	<a class="post-tag global-tag" href="https://blog.rocketseat.com.br/tag/rocketseat/">rocketseat</a>
+	<a class="post-tag global-tag" href="https://blog.rocketseat.com.br/tag/reactnavigation/">ReactNavigation</a>
+	<a class="post-tag global-tag" href="https://blog.rocketseat.com.br/tag/mapbox/">Mapbox</a>
+	<a class="post-tag global-tag" href="https://blog.rocketseat.com.br/tag/expo/">expo</a>
+	<a class="post-tag global-tag" href="https://blog.rocketseat.com.br/tag/github/">github</a>
+	<a class="post-tag global-tag" href="https://blog.rocketseat.com.br/tag/nextjs/">NextJS</a>
+	<a class="post-tag global-tag" href="https://blog.rocketseat.com.br/tag/docker/">docker</a>
+	<a class="post-tag global-tag" href="https://blog.rocketseat.com.br/tag/typescript/">Typescript</a>
+	<a class="post-tag global-tag" href="https://blog.rocketseat.com.br/tag/top/">top</a>
+	<a class="post-tag global-tag" href="https://blog.rocketseat.com.br/tag/graphql/">graphql</a>
+</div>
+				<div class="search-suggestion-authors">
+	<h3>Posso te sugerir um autor?</h3>
+	<a class="post-tag global-tag" href="https://blog.rocketseat.com.br/author/diego/">Diego Fernandes</a>
+	<a class="post-tag global-tag" href="https://blog.rocketseat.com.br/author/thiago-marinho/">Thiago Marinho</a>
+	<a class="post-tag global-tag" href="https://blog.rocketseat.com.br/author/higo/">Higo Ribeiro</a>
+	<a class="post-tag global-tag" href="https://blog.rocketseat.com.br/author/claudio/">Claudio Orlandi</a>
+	<a class="post-tag global-tag" href="https://blog.rocketseat.com.br/author/joao/">João Paulo de Magalhães</a>
+	<a class="post-tag global-tag" href="https://blog.rocketseat.com.br/author/tiago/">Tiago Luchtenberg</a>
+	<a class="post-tag global-tag" href="https://blog.rocketseat.com.br/author/levir/">Carlos Levir</a>
+</div>
+			</div>
+		</div>
+		<div class="search-footer">
+			<a href="https://blog.rocketseat.com.br/">Blog da Rocketseat.</a>
+			<span>Junte-se a milhares de devs e acelere na direção dos seus objetivos. Transforme sua carreira em uma jornada de evolução contínua através das melhores tecnologias..</span>
+		</div>
+	</div>
+</div>
+<script>
+var searchPublished = 'Publicado',
+	searchFeaturedIcon = '<svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22.9712403,8.05987765 L16.2291373,8.05987765 L12.796794,0.459688839 C12.5516266,-0.153229613 11.4483734,-0.153229613 11.0806223,0.459688839 L7.64827899,8.05987765 L0.906176009,8.05987765 C0.538424938,8.05987765 0.170673866,8.30504503 0.0480901758,8.6727961 C-0.0744935148,9.04054717 0.0480901758,9.40829825 0.293257557,9.65346563 L5.31918887,14.3116459 L3.11268244,22.4021694 C2.99009875,22.7699205 3.11268244,23.1376716 3.48043351,23.382839 C3.72560089,23.6280063 4.21593565,23.6280063 4.46110303,23.5054227 L11.9387082,19.2149935 L19.4163133,23.5054227 C19.538897,23.6280063 19.6614807,23.6280063 19.906648,23.6280063 C20.1518154,23.6280063 20.2743991,23.5054227 20.5195665,23.382839 C20.7647339,23.1376716 20.8873176,22.7699205 20.8873176,22.4021694 L18.6808111,14.3116459 L23.7067424,9.65346563 C23.9519098,9.40829825 24.0744935,9.04054717 23.9519098,8.6727961 C23.7067424,8.30504503 23.3389914,8.05987765 22.9712403,8.05987765 Z"/></svg>',
+	searchHost = 'https://blog.rocketseat.com.br',
+	searchKey = "2b49ebf614d4115f012bdd7d7c",
+	searchAPI = searchHost+'/ghost/api/v3/content/posts/?key='+searchKey+'&limit=all&formats=plaintext&fields=url,title,featured,published_at,plaintext,excerpt,visibility'
+</script>		<script src="./Mapas com React usando Leaflet_files/post.js"></script>
+		<script src="./Mapas com React usando Leaflet_files/global.js"></script>
+		<script src="./Mapas com React usando Leaflet_files/ityped.js"></script>
+		
+		
+		<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async="" src="./Mapas com React usando Leaflet_files/js(1)"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-V9B10P6RKF');
+</script>
+<!-- Global site tag (gtag.js) - Google Ads: 811368325 -->
+<script async="" src="./Mapas com React usando Leaflet_files/js(2)"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'AW-811368325');
+</script>
+<script type="text/javascript" src="./Mapas com React usando Leaflet_files/prism.min.js"></script>
+<script type="text/javascript" src="./Mapas com React usando Leaflet_files/prism-css.min.js"></script>
+<script type="text/javascript" src="./Mapas com React usando Leaflet_files/prism-jsx.min.js"></script>
+<script type="text/javascript" src="./Mapas com React usando Leaflet_files/prism-javascript.min.js"></script>
+<script type="text/javascript" src="./Mapas com React usando Leaflet_files/prism-typescript.min.js"></script>
+	
+<div class="lightense-backdrop"></div><iframe style="display: none;" src="./Mapas com React usando Leaflet_files/saved_resource(1).html"></iframe></body></html>

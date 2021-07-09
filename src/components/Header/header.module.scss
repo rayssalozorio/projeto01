@@ -1,1 +1,30 @@
-// TODO
+.true {
+  position: absolute;
+  width: 238.62px;
+  height: 25.63px;
+  left: 210px;
+  top: 79.55px;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+.false {
+  position: absolute;
+  width: 238.62px;
+  height: 25.63px;
+  left: 190px;
+  top: 40px;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.header {
+  position: absolute;
+  width: 1120px;
+  height: 105px;
+  left: 160px;
+  top: 0px;
+}

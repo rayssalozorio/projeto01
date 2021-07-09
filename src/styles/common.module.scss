@@ -1,1 +1,37 @@
-// TODO
+.content {
+  margin: 0 auto;
+  width: 1440px;
+  height: 1080px;
+  background: var(--black);
+  display: flex;
+  align-items: center;
+
+  button {
+    border: none;
+    background: transparent;
+    font-weight: 600;
+    font-size: 1.125rem;
+    color: var(--pink);
+    margin-top: 1.2rem;
+  }
+
+  .postContent {
+    color: white;
+    position: absolute;
+    width: 700px;
+    height: 108px;
+    left: 370px;
+    top: 170px;
+  }
+}
+.container {
+  position: relative;
+  width: 721px;
+  height: 218px;
+  left: 349px;
+  top: 585px;
+  color: var(--white-100);
+  >h3{
+    background:pink
+  }
+}
