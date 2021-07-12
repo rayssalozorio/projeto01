@@ -1,20 +1,20 @@
 import { GetStaticPaths, GetStaticProps } from 'next';
 import { RichText } from 'prismic-dom';
-import Prismic from '@prismicio/client';
-import { format } from 'date-fns';
-import ptBR from 'date-fns/locale/pt-BR';
-
 import { getPrismicClient } from '../../services/prismic';
+import { format } from 'date-fns';
+import { FiCalendar, FiClock, FiEdit, FiUser } from 'react-icons/fi';
+import { useRouter } from 'next/router';
+import React, { useEffect, useState } from 'react';
+import Prismic from '@prismicio/client';
+import ptBR from 'date-fns/locale/pt-BR';
+import Head from 'next/head';
+import { useSession } from 'next-auth/client';
+import Header from '../../components/Header';
+import { Footer } from '../../components/Footer';
 
 import commonStyles from '../../styles/common.module.scss';
 import styles from './post.module.scss';
-import React from 'react';
-import { FiCalendar, FiClock, FiEdit, FiUser } from 'react-icons/fi';
-import Header from '../../components/Header';
-import Head from 'next/head';
-
-import { useRouter } from 'next/router';
-import { Footer } from '../../components/Footer';
+import { Comments } from '../../components/Comments';
 
 //Para calcular o tempo estimado de leitura, sugerimos utilizar o método `reduce`
 //para iterar o array `content`, o método `PrismicDOM.RichText.asText` para obter
@@ -111,7 +111,12 @@ export default function Post({ post }: PostProps): JSX.Element {
             );
           })}
         </div>
-        <Footer />
+        <div>
+          <Footer />
+          <div>
+            <Comments />
+          </div>
+        </div>
       </main>
     </>
   );
@@ -140,7 +145,6 @@ export const getStaticProps: GetStaticProps = async context => {
   const prismic = getPrismicClient();
   const { slug } = context.params;
   const response = await prismic.getByUID('post', String(slug), {});
-
   const post = {
     uid: response.uid,
     first_publication_date: format(
@@ -178,3 +182,5 @@ export const getStaticProps: GetStaticProps = async context => {
     },
   };
 };
+
+export function Coments() {}

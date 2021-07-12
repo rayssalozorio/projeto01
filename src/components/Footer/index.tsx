@@ -9,8 +9,12 @@ export function Footer() {
       </h3>
       <div>
         <main className={styles.postPagination}>
-          <Link href="/">Post Anterior</Link>
-          <Link href="/">Próximo Post</Link>
+          <div>
+            <Link href="/">Post Anterior</Link>
+          </div>
+          <div>
+            <Link href="/">Próximo Post</Link>
+          </div>
         </main>
       </div>
     </div>

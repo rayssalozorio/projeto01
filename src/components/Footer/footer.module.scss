@@ -1,6 +1,6 @@
 .footerContainer {
-  width: 100%;
-  height: 200rem;
+  width: 95%;
+  height: 10rem;
   margin-top: 6rem;
   position: relative;
 
@@ -10,5 +10,7 @@
   }
 }
 .postPagination {
+  display: flex;
   margin-top: 4rem;
+  justify-content: space-between;
 }
