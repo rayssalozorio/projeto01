@@ -31,7 +31,43 @@
   left: 349px;
   top: 585px;
   color: var(--white-100);
-  >h3{
-    background:pink
+  > h3 {
+    background: pink;
+  }
+}
+
+.divPreview {
+  height: 4rem;
+  .preview {
+    display: block;
+    width: 100%;
+    max-width: 700px;
+    margin: 0 auto;
+    margin-top: 5.5rem;
+    background: var(--white-100);
+    color: var(--black);
+    text-align: center;
+    border-radius: 4px;
+    padding: 1rem;
+    font-weight: 600;
+    font-size: 1.125rem;
+  }
+}
+.divPreviewinicial {
+  margin-top: -10rem;
+  margin-left: 22rem;
+
+  .previewInicial {
+    margin-top: 5.5rem;
+    background: var(--white-100);
+    color: var(--black);
+    text-align: center;
+    border-radius: 4px;
+    padding: 1rem;
+    padding-left: 12rem;
+    padding-right: 12rem;
+
+    font-weight: 600;
+    font-size: 1.125rem;
   }
 }

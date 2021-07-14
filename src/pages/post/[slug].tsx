@@ -8,13 +8,13 @@ import React, { useEffect, useState } from 'react';
 import Prismic from '@prismicio/client';
 import ptBR from 'date-fns/locale/pt-BR';
 import Head from 'next/head';
-import { useSession } from 'next-auth/client';
 import Header from '../../components/Header';
 import { Footer } from '../../components/Footer';
-
+import Link from 'next/link';
 import commonStyles from '../../styles/common.module.scss';
 import styles from './post.module.scss';
 import { Comments } from '../../components/Comments';
+import preview from '../api/preview';
 
 //Para calcular o tempo estimado de leitura, sugerimos utilizar o método `reduce`
 //para iterar o array `content`, o método `PrismicDOM.RichText.asText` para obter
@@ -40,9 +40,10 @@ interface Post {
 
 interface PostProps {
   post: Post;
+  preview: boolean;
 }
 
-export default function Post({ post }: PostProps): JSX.Element {
+export default function Post({ post, preview }: PostProps): JSX.Element {
   const router = useRouter();
   if (router.isFallback) {
     return <h1>Carregando...</h1>;
@@ -115,6 +116,18 @@ export default function Post({ post }: PostProps): JSX.Element {
           <Footer />
           <div>
             <Comments />
+            <div className={commonStyles.divPreview}>
+              {preview && (
+                <aside>
+                  <Link href="/api/exit-preview">
+                    <a className={commonStyles.preview}>
+                      {' '}
+                      Sair do modo Preview{' '}
+                    </a>
+                  </Link>
+                </aside>
+              )}
+            </div>
           </div>
         </div>
       </main>
@@ -140,11 +153,16 @@ export const getStaticPaths: GetStaticPaths = async () => {
   };
 };
 
-export const getStaticProps: GetStaticProps = async context => {
-  console.log(context);
+export const getStaticProps: GetStaticProps = async ({
+  params,
+  preview = false,
+  previewData,
+}) => {
   const prismic = getPrismicClient();
-  const { slug } = context.params;
-  const response = await prismic.getByUID('post', String(slug), {});
+  const { slug } = params;
+  const response = await prismic.getByUID('post', String(slug), {
+    ref: previewData?.ref || null,
+  });
   const post = {
     uid: response.uid,
     first_publication_date: format(
@@ -176,9 +194,11 @@ export const getStaticProps: GetStaticProps = async context => {
       }),
     },
   };
+
   return {
     props: {
       post,
+      preview,
     },
   };
 };
